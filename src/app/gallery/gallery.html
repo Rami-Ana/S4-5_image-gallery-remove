@@ -1,4 +1,7 @@
-@for (image of images; track image.id; let i = $index) {
-<app-image-item [image]="image" [isFeatured]="i === 0">
+@for (image of images(); track image.id) {
+<app-image-item 
+    [image]="image" 
+    (deleteImage)="removeImage(image.id)"
+    [isFeatured]="image.id === featuredImageId()">
 </app-image-item>
 }

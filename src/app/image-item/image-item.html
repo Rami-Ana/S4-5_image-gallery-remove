@@ -1,3 +1,6 @@
-<div [class.featured]="isFeatured()">
+<div class="image-container" [class.featured]="isFeatured()">
   <img [src]="image().src" [alt]="image().alt">
+  <button class="btn" (click)="onDeleteClick($event)">
+    Borrar
+  </button>
 </div>

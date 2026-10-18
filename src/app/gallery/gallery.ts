@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Image } from '../interfaces/image-interface';
 import { ImageItem } from '../image-item/image-item';
 
@@ -10,7 +10,7 @@ import { ImageItem } from '../image-item/image-item';
 })
 
 export class Gallery {
-  images: Image[] = [
+  images = signal<Image[]>([
     {
       id: '1',
       src: 'https://picsum.photos/id/230/200/300',
@@ -41,5 +41,18 @@ export class Gallery {
       src: 'https://picsum.photos/id/233/200/300',
       alt: 'Imagen 6'
     }
-  ]
+  ])
+
+  featuredImageId = signal<string>(this.images()[0]?.id || '');
+
+  removeImage(id: string) {
+    const confirmed = window.confirm("¿Seguro quieres eliminar la imagen?");
+    if (!confirmed) return;
+
+    this.images.update(imgs => imgs.filter(img => img.id !== id));
+
+    if (this.featuredImageId() === id) {
+      this.featuredImageId.set(this.images()[0]?.id || '');
+    }
+  }
 }
